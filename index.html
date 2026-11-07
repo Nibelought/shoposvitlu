@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="uk">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ШоПоСвітлу — графіки відключень, Запоріжжя</title>
+  <meta name="description" content="Зручний перегляд графіків погодинних відключень електроенергії (ГПВ) Запоріжжяобленерго для Запоріжжя та Запорізького району.">
+  <meta name="theme-color" content="#0f1720">
+  <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap">
+      <h1><span class="bolt" aria-hidden="true">⚡</span> ШоПоСвітлу</h1>
+      <p class="sub">Графіки відключень · Запоріжжя та Запорізький район</p>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <noscript><p class="card">Для роботи сайту потрібен JavaScript.</p></noscript>
+
+    <section class="card" aria-labelledby="queue-h">
+      <h2 id="queue-h">Ваша черга</h2>
+      <div id="queue-picker" class="queues" role="group" aria-label="Оберіть чергу"></div>
+      <p class="hint">Не знаєте свою чергу? <a href="https://script.google.com/macros/s/AKfycbwFgBo9W8JL_7FqghJ1hDiE-Fyxzs4GZJAq2xhTseOiv5ZnkusMKj0_g9R0DJKko19r/exec" target="_blank" rel="noopener">Дізнайтеся за адресою</a> на сайті Запоріжжяобленерго.</p>
+    </section>
+
+    <section id="status" class="card status" aria-live="polite" hidden></section>
+
+    <section class="card" aria-labelledby="day-h">
+      <h2 id="day-h">Графік</h2>
+      <div id="day-tabs" class="tabs" role="tablist" aria-label="Дата"></div>
+      <div id="day-meta" class="meta"></div>
+      <div id="my-day"></div>
+    </section>
+
+    <section class="card" aria-labelledby="all-h">
+      <h2 id="all-h">Усі черги</h2>
+      <div id="all-queues"></div>
+      <p class="hint">Натисніть на чергу, щоб обрати її. Часи вказано з урахуванням 30 хвилин на перемикання.</p>
+    </section>
+
+    <section id="notes-card" class="card" hidden aria-labelledby="notes-h">
+      <h2 id="notes-h">Примітки до графіка</h2>
+      <div id="notes"></div>
+    </section>
+
+    <div id="error" class="card error" hidden></div>
+  </main>
+
+  <footer class="wrap foot">
+    <p>Дані беруться з офіційної сторінки <a href="https://www.zoe.com.ua/outage/" target="_blank" rel="noopener">АТ «Запоріжжяобленерго»</a> і перевіряються автоматично кожні ~15 хвилин. <strong>Це неофіційний сайт</strong> — у разі розбіжностей орієнтуйтесь на джерело.</p>
+    <p id="checked"></p>
+  </footer>
+
+  <script src="logic.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

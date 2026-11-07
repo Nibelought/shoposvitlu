@@ -237,15 +237,12 @@
 
   function renderFooter() {
     var node = $("checked");
-    node.textContent = "";
-    if (!state.meta || !state.meta.checkedAt) { return; }
-    var t = new Date(state.meta.checkedAt);
-    if (isNaN(t)) { return; }
-    var txt = new Intl.DateTimeFormat("uk-UA", {
-      timeZone: "Europe/Kyiv", day: "numeric", month: "long", hour: "2-digit", minute: "2-digit"
-    }).format(t);
-    var stale = Date.now() - t.getTime() > 3 * 3600 * 1000;
-    node.textContent = "Останнє автоматичне оновлення: " + txt + (stale ? " — дані можуть бути застарілими, перевірте джерело." : ".");
+    var keys = Object.keys(state.data.days).sort();
+    if (!keys.length) { node.textContent = ""; return; }
+    var last = keys[keys.length - 1];
+    var d = state.data.days[last];
+    node.textContent = "Найновіший графік у базі: " + L.dayLabel(last, last === currentTime().key ? last : currentTime().key).toLowerCase() +
+      (d.updatedAt ? " (версія " + d.updatedAt + ")" : "") + ".";
   }
 
   function render() {

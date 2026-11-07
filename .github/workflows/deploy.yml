@@ -1,10 +1,9 @@
 name: Update schedules & deploy
 
+# Automation is OFF on purpose: the workflow is disabled and has no push/schedule triggers.
+# (zoe.com.ua drops connections from GitHub's servers, so the scrape step can't succeed here.)
+# Re-enable with `gh workflow enable` and add triggers back only if that changes.
 on:
-  push:
-    branches: [main]
-  schedule:
-    - cron: "*/15 * * * *"
   workflow_dispatch:
 
 permissions:

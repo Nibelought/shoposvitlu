@@ -10,20 +10,23 @@
 ## Як це працює
 
 ```
-zoe.com.ua/outage ──(scraper/scrape.py, GitHub Actions кожні ~15 хв)──> data/schedules.json ──> GitHub Pages
+zoe.com.ua/outage ──(scraper/scrape.py, запускається вручну)──> data/schedules.json ──> сайт (Vercel / GitHub Pages)
 ```
+
+**Автоматичного оновлення немає.** Сервер zoe.com.ua не відповідає на запити з GitHub Actions та Vercel
+(перевірено: таймаут з регіонів США, Франкфурта, Парижа, Лондона, Стокгольма), тому скрапер потрібно запускати
+вручну з мережі, яка має доступ, і закомітити `data/schedules.json`. Workflow `.github/workflows/deploy.yml`
+вимкнено і має лише ручний запуск.
 
 * `scraper/scrape.py` — збирає пости зі сторінок 1–2 джерела, дату виводить із заголовка, для кожної дати бере
   найновіший пост, зливає з уже збереженими днями (зберігається 60 днів). Лише стандартна бібліотека Python.
-* `.github/workflows/deploy.yml` — тести → скрапер → коміт змінених даних → деплой на Pages.
-* `index.html`, `style.css`, `logic.js` (чиста логіка, час за Києвом), `app.js` (інтерфейс) — статичний сайт без збірки.
-
-Браузер не може читати zoe.com.ua напряму (CORS), тому дані збираються на сервері GitHub Actions.
+* `index.html`, `style.css`, `logic.js` (чиста логіка, час за Києвом), `app.js` (інтерфейс), `sw.js` + `manifest.webmanifest`
+  (встановлення на головний екран, офлайн) — статичний сайт без збірки.
 
 ## Локальний запуск і тести
 
 ```sh
-python3 scraper/scrape.py          # оновити data/schedules.json
+python3 scraper/scrape.py          # оновити data/schedules.json, потім git commit + push
 python3 -m http.server 8000        # http://localhost:8000
 python3 -I -m unittest discover -s scraper/tests
 node --test tests/

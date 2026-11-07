@@ -129,6 +129,17 @@ main { padding-top: 16px; padding-bottom: 8px; }
 .row .lbl { font-weight: 600; font-size: .9rem; }
 .row .bar { margin: 0; }
 
+/* install card */
+.install p { margin: 0 0 10px; }
+.steps { margin: 0 0 12px; padding-left: 20px; }
+.steps li { margin-bottom: 4px; }
+.actions { display: flex; gap: 8px; flex-wrap: wrap; }
+.btn {
+  font: inherit; font-weight: 600; padding: 9px 16px; border-radius: 10px; cursor: pointer;
+  border: 1px solid var(--accent); background: var(--accent); color: var(--on-accent);
+}
+.btn.ghost { background: transparent; color: var(--text); border-color: var(--line); font-weight: 400; }
+
 .notes p { margin: 0 0 10px; }
 .notes p:last-child { margin: 0; }
 

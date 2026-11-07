@@ -275,6 +275,57 @@
     render();
   }
 
+  /* ---------- install to home screen (PWA) ---------- */
+
+  function isStandalone() {
+    return (window.matchMedia && window.matchMedia("(display-mode: standalone)").matches) ||
+      window.navigator.standalone === true;
+  }
+
+  function isIos() {
+    var ua = navigator.userAgent || "";
+    return /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1);
+  }
+
+  function initInstall() {
+    var card = $("install");
+    if (isStandalone() || store("installDismissed") === "1") { return; }
+    var deferred = null;
+
+    function show() { card.hidden = false; }
+
+    // Chrome/Edge/Android: the browser tells us when installation is possible.
+    window.addEventListener("beforeinstallprompt", function (e) {
+      e.preventDefault();
+      deferred = e;
+      $("install-btn").hidden = false;
+      show();
+    });
+    $("install-btn").addEventListener("click", function () {
+      if (!deferred) { return; }
+      deferred.prompt();
+      deferred.userChoice.finally(function () { deferred = null; card.hidden = true; });
+    });
+    window.addEventListener("appinstalled", function () { card.hidden = true; });
+
+    // iOS Safari has no install API - show manual steps.
+    if (isIos()) {
+      $("install-steps").hidden = false;
+      show();
+    }
+    $("install-dismiss").addEventListener("click", function () {
+      card.hidden = true;
+      store("installDismissed", "1");
+    });
+  }
+
+  function registerServiceWorker() {
+    if (!("serviceWorker" in navigator)) { return; }
+    window.addEventListener("load", function () {
+      navigator.serviceWorker.register("sw.js").catch(function () { /* offline mode is optional */ });
+    });
+  }
+
   /* ---------- data ---------- */
 
   function load() {
@@ -299,6 +350,9 @@
   }
 
   // `?queue=3.2` makes a shareable link; otherwise use the remembered choice.
+  initInstall();
+  registerServiceWorker();
+
   var wanted = params.get("queue") || store("queue");
   if (wanted && L.QUEUES.indexOf(wanted) !== -1) { state.queue = wanted; }
   renderPicker();

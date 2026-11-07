@@ -61,8 +61,8 @@ jobs:
       - name: Stage site
         run: |
           mkdir _site
-          cp index.html style.css app.js logic.js favicon.svg _site/
-          cp -r data _site/data
+          cp index.html style.css app.js logic.js sw.js favicon.svg manifest.webmanifest _site/
+          cp -r icons data _site/
 
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

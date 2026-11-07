@@ -7,6 +7,12 @@
   <meta name="description" content="Зручний перегляд графіків погодинних відключень електроенергії (ГПВ) Запоріжжяобленерго для Запоріжжя та Запорізького району.">
   <meta name="theme-color" content="#0f1720">
   <link rel="icon" href="favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-title" content="ШоПоСвітлу">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -27,6 +33,20 @@
     </section>
 
     <section id="status" class="card status" aria-live="polite" hidden></section>
+
+    <section id="install" class="card install" hidden aria-labelledby="install-h">
+      <h2 id="install-h">Додати на головний екран</h2>
+      <p id="install-text">Відкривайте графік одним дотиком, як звичайний застосунок. Працює й без інтернету (покаже останні збережені дані).</p>
+      <ol id="install-steps" class="steps" hidden>
+        <li>Відкрийте цей сайт у <strong>Safari</strong>.</li>
+        <li>Натисніть <strong>«Поділитися»</strong> <span aria-hidden="true">⬆️</span> внизу екрана.</li>
+        <li>Оберіть <strong>«На початковий екран»</strong>, потім <strong>«Додати»</strong>.</li>
+      </ol>
+      <div class="actions">
+        <button type="button" id="install-btn" class="btn" hidden>Встановити</button>
+        <button type="button" id="install-dismiss" class="btn ghost">Не зараз</button>
+      </div>
+    </section>
 
     <section class="card" aria-labelledby="day-h">
       <h2 id="day-h">Графік</h2>
